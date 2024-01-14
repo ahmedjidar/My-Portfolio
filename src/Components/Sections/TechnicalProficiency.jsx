@@ -4,6 +4,7 @@ import myInformation from "../../Constants/myInformation";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const TechnicalProficiency = () => {
     const fadeInVariants = {
@@ -49,11 +50,15 @@ const TechnicalProficiency = () => {
                             <div>
                                 <p className="text-gray-300 text-sm leading-relaxed font-normal">{data.description}</p>
                             </div>
-                            <button className="text-indigo-400">
+                            <Link 
+                                className="text-indigo-400"
+                                target="_blank"
+                                to="https://www.geeksforgeeks.org/are-data-structures-and-algorithms-important-for-web-developers/"
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:translate-x-[2px] hover:translate-y-[-2px] transition-all duration-300">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
                                 </svg>
-                            </button>
+                            </Link>
                         </motion.div>
                     ))
                 }

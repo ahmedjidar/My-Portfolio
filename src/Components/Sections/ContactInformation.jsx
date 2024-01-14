@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import myInformation from "../../Constants/myInformation";
 import { Container, Row, Col } from "react-bootstrap";
 import { contactInformation, services } from "../../Constants/contactInformation";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
 const ContactInformation = () => {
     const animatedComponents = makeAnimated();
+    const fadeInVariants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+      };
+
+    const controls = useAnimation();
+    const [ref, inView] = useInView({ triggerOnce: true, rootMargin: "0px 0px 100px 0px" });
+    
+    useEffect(() => {
+        if (inView) {
+          controls.start("visible");
+        }
+      }, [controls, inView]);
 
     return(
         <div className="flex flex-col items-center justify-between py-4 md:py-20 px-16 md:px-40 md:my-12">
@@ -23,7 +38,14 @@ const ContactInformation = () => {
                     action="" 
                     className="md:basis-3/4"
                 >
-                    <div className="flex flex-wrap items-center justify-start">
+                    <motion.div 
+                        className="flex flex-wrap items-center justify-start"
+                        variants={fadeInVariants}
+                        initial="hidden"
+                        animate={controls}
+                        transition={{ duration: 0.5, delay: 0.33 }}
+                        ref={ref}
+                    >
                         <Container fluid>
                             <Row className="hidden md:block">
                                 <Col>
@@ -150,10 +172,17 @@ const ContactInformation = () => {
                                 </Col>
                             </Row>
                         </Container>
-                    </div>
+                    </motion.div>
                 </form>
                 {/* businness info */}
-                <div className="flex flex-col items-start justify-center gap-4 md:w-1/2">
+                <motion.div 
+                    variants={fadeInVariants}
+                    initial="hidden"
+                    animate={controls}
+                    transition={{ duration: 0.5, delay: 0.44 }}
+                    ref={ref}
+                    className="flex flex-col items-start justify-center gap-4 md:w-1/2"
+                >
                     <div className="flex flex-col items-start justify-center mb-4">
                         <p className="text-gray-100 font-semibold text-start text-pretty leading-relaxed">My contact information</p>
                         <p className="text-gray-300 text-sm text-start text-pretty leading-relaxed">Where you can manually get in touch.</p>
@@ -192,7 +221,7 @@ const ContactInformation = () => {
                             </div>
                         ))
                     }
-                </div>
+                </motion.div>
             </div>
         </div>
     )
